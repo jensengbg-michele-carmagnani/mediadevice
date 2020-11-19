@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styele.css">
+  <script src="./script/script.js" defer charset="utf-8"></script>
+  <title>MediaDevice</title>
+</head>
+<body>
+  <main>
+    <section class="profile">
+      <h1>User profile</h1>
+      <img src="#" alt="Profile picture"/>
+      <p style="text-align: center;">
+          eyes  <br>
+        </p>
+        <button disabled> Take picture </button>
+    </section>
+    <section class="video">
+      <div class="stream">
+        <button class="start-stream"> Show camera video </button>
+        <button class="stop-stream" disabled> Stop video </button>
+      </div>
+      <div class="recording">
+        <button class="start-recording" disabled> Record video </button>
+        <button class="stop-recording" disabled> Stop recording </button>
+        <a href="" download class="downloadLink hidden"> Download </a>
+      </div>
+      <p class="message error"> <!-- Plats för felmeddelanden --> </p>
+      <video src="" autoplay poster="" controls></video>
+    </section>
+  </main>
+  
+</body>
+</html>
