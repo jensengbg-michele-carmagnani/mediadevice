@@ -19,11 +19,13 @@ function cameraSettings() {
   const startRecording = document.querySelector(".video .start-recording");
   const stopRecording = document.querySelector(".video .stop-recording");
   const downloadLink = document.querySelector(".video .downloadLink");
-  const facing = document.querySelector(".change-facing");
+  const facingButton = document.querySelector(".change-facing");
   // .profile > p > button  --> 012, omständigt men mer specifikt
   // .profile       button  --> 011, enklare
 
   let stream;
+  let facing = "environment";
+  // User clicks "Show camera window"
   showVideoButton.addEventListener("click", async () => {
     errorMessage.innerHTML = "";
     try {
@@ -39,6 +41,7 @@ function cameraSettings() {
       showVideoButton.disabled = true;
       startRecording.disabled = false;
     } catch (e) {
+      // Visa felmeddelande för användaren:
       errorMessage.innerHTML = "Could not show camera window.";
     }
   });
@@ -89,7 +92,7 @@ function cameraSettings() {
   });
 
   let mediaRecorder;
-
+  // user clicks "Record video"
   startRecording.addEventListener("click", async () => {
     if (!stream) {
       errorMessage.innerHTML = "No viedo available.";
@@ -99,6 +102,8 @@ function cameraSettings() {
     stopRecording.disabled = false;
     mediaRecorder = new MediaRecorder(stream);
     let chunks = [];
+
+    // Triggered every time there is a new packet of video data to process
     mediaRecorder.addEventListener("dataavailable", (event) => {
       console.log("mediarecorder.dataavailable:", event);
       const blob = event.data;
@@ -106,7 +111,7 @@ function cameraSettings() {
         chunks.push(blob);
       }
     });
-
+    // Triggered when the recording has stopped, after all data packets has been processed
     mediaRecorder.addEventListener("stop", (event) => {
       console.log("mediaRecorder.stop:", event);
       const blob = new Blob(chunks, { type: "video/webm" });
@@ -119,10 +124,14 @@ function cameraSettings() {
     });
     mediaRecorder.start();
   });
+
+  // User clicks "Stop recording"
   stopRecording.addEventListener("click", async () => {
     if (mediaRecorder) {
       stopRecording.disabled = true;
       startRecording.disabled = false;
+
+      // This triggers "dataavailable"
       mediaRecorder.stop();
       mediaRecorder = null;
     } else {
